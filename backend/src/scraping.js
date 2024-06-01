@@ -37,6 +37,8 @@ export const useScraping = () => {
 
         const html = scrapeWebsite(palace.url);
 
+        console.log(html)
+
         const dom = new JSDOM(html)
 
         const program = dom.window.document.getElementById('program').innerHTML;
