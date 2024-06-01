@@ -1,5 +1,5 @@
 // import { Client, Databases, ID } from 'node-appwrite';
-import { scrape } from "./scraping";
+import { scrape } from "./scraping.js";
 
 export default async ({ res, log, error }) => {
 
