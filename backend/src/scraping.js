@@ -1,5 +1,6 @@
 import { GRABENHALLE, PALACE, clubs } from './clubs.js';
 import { JSDOM } from 'jsdom';
+import moment from 'moment';
 
 export const useScraping = () => {
     const scrapeWebsite = async (url) => {
@@ -19,6 +20,10 @@ export const useScraping = () => {
 
         const html = await scrapeWebsite(grabenHalle.url);
 
+        if (html === null) {
+            return null;
+        }
+
         const dom = new JSDOM(html)
 
         return {
@@ -37,21 +42,37 @@ export const useScraping = () => {
 
         const html = await scrapeWebsite(palace.url);
 
-        console.log(html)
+        if (html === null) {
+            return null;
+        }
 
         const dom = new JSDOM(html)
 
-        const program = dom.window.document.getElementById('program').innerHTML;
+        const program = dom.window.document.getElementById('program');
 
-        console.log(program)
+        const events = Array.from(program.getElementsByTagName('a'));
 
-        return {
-            "raw_html": html,
-            "event_description": "test",
-            "event_date": "01.06.2024",
-            "event_link": "https://www.digitec.ch",
-            "club": palace.documentID
-        }
+        return events.map(event => {
+            const headline = event.getElementsByClassName('headline')[0].textContent;
+
+            const link = palace.url + event.getAttribute("href");
+
+            const onClickAttribute = event.getAttribute('onclick');
+
+            const dateStartIndex = onClickAttribute.indexOf('"Event/') + 7;
+
+            const dateEndIndex = dateStartIndex + 10;
+
+            const date = moment(onClickAttribute.substring(dateStartIndex, dateEndIndex)).format('YYYY.MM.DD');
+
+            return {
+                "raw_html": html,
+                "event_description": headline,
+                "event_date": date,
+                "event_link": link,
+                "club": palace.documentID
+            }
+        })
     }
 
     return {
