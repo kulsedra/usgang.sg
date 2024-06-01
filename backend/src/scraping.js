@@ -1,44 +1,38 @@
-import { Builder, Capabilities } from 'selenium-webdriver';
-import chrome from 'selenium-webdriver/chrome.js';
-import chromedriver from 'chromedriver';
-
-export const scrape = async () => {
-    const path = chromedriver.path;
-
-    const driver = await new Builder()
-        .withCapabilities(Capabilities.chrome())
-        .setChromeService(new chrome.ServiceBuilder(path))
-        .setChromeOptions(new chrome.Options().addArguments('--headless=new'))
-        .build();
-
-    await driver.get('https://www.grabenhalle.ch');
-
-    const title = await driver.getTitle();
-
-    console.log(title)
-
-    await driver.quit();
-}
-
-/*
 import { Builder, Browser } from 'selenium-webdriver';
 import chrome from 'selenium-webdriver/chrome.js';
+import chromedriver from 'chromedriver';
+import { GRABENHALLE, clubs } from './clubs.js';
 
-export const scrape = async () => {
-    const options = new chrome.Options();
-    options.addArguments('--headless=new');
+export const useScraping = () => {
+    const createDriver = async () => {
+        return await new Builder()
+            .forBrowser(Browser.CHROME)
+            .setChromeService(new chrome.ServiceBuilder(chromedriver.path))
+            .setChromeOptions(new chrome.Options().addArguments('--headless=new'))
+            .build();
+    }
 
-    const driver = await new Builder()
-        .forBrowser(Browser.CHROME)
-        .setChromeOptions(options)
-        .build();
+    const scrapeGrabenhalle = async () => {
+        const driver = await createDriver();
 
-    await driver.get('https://www.grabenhalle.ch');
+        await driver.get(clubs[GRABENHALLE].url);
 
-    const title = await driver.getTitle();
+        const title = await driver.getTitle();
 
-    console.log(title)
+        console.log(title)
 
-    await driver.quit();
+        await driver.quit();
+
+        return {
+            "raw_html": "test",
+            "event_description": "test",
+            "event_date": "01.06.2024",
+            "event_link": "https://www.digitec.ch",
+            "club": "palace"
+        }
+    }
+
+    return {
+        scrapeGrabenhalle
+    }
 }
-*/
