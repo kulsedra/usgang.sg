@@ -63,7 +63,7 @@ export const useScraping = () => {
 
             const dateEndIndex = dateStartIndex + 10;
 
-            const date = moment(onClickAttribute.substring(dateStartIndex, dateEndIndex)).format('YYYY.MM.DD');
+            const date = moment(onClickAttribute.substring(dateStartIndex, dateEndIndex)).format('DD.MM.YYYY');
 
             return {
                 "raw_html": html,
