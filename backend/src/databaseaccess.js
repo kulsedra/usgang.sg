@@ -2,8 +2,8 @@ import { Client, Databases, ID } from 'node-appwrite';
 
 export const useDatabaseAccess = () => {
     const client = new Client()
-        .setEndpoint(process.env.APPWRITE_API_ENDPOINT)
-        .setProject(process.env.APPWRITE_PROJECT_ID)
+        .setEndpoint("https://cloud.appwrite.io/v1")
+        .setProject(process.env.APPWRITE_FUNCTION_PROJECT_ID)
         .setKey(process.env.APPWRITE_API_KEY);
 
     const databases = new Databases(client);
