@@ -1,16 +1,9 @@
 // import { Client, Databases, ID } from 'node-appwrite';
-import { Builder, Browser } from 'selenium-webdriver';
+import { scrape } from "./scraping";
 
 export default async ({ res, log, error }) => {
-  const driver = await new Builder().forBrowser(Browser.CHROME).build();
 
-  await driver.get('https://www.grabenhalle.ch');
-
-  const title = await driver.getTitle();
-
-  log(title);
-
-  await driver.quit();
+  await scrape();
 
   /*
   const client = new Client()
@@ -21,6 +14,7 @@ export default async ({ res, log, error }) => {
   const databases = new Databases(client);
 
   try {
+    log('test');
     await databases.createDocument(
       'usgang.sg',
       'events',
