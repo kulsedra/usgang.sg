@@ -16,7 +16,7 @@ export const useDatabaseAccess = () => {
                     "event_description": event_description,
                     "event_date": event_date,
                     "event_link": event_link,
-                    "club": club
+                    "club": club,
                 }
             )
         } catch (e) {
