@@ -17,7 +17,7 @@ export const useScraping = () => {
 
         console.log(`start scraping ${grabenHalle.name}`)
 
-        const html = scrapeWebsite(grabenHalle.url);
+        const html = await scrapeWebsite(grabenHalle.url);
 
         const dom = new JSDOM(html)
 
@@ -35,7 +35,7 @@ export const useScraping = () => {
 
         console.log(`start scraping ${palace.name}`)
 
-        const html = scrapeWebsite(palace.url);
+        const html = await scrapeWebsite(palace.url);
 
         console.log(html)
 
