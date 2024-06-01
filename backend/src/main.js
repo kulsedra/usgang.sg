@@ -26,5 +26,5 @@ export default async ({ res, log, error }) => {
     error("Failed to create document: " + e.message)
   }
 
-  return context.res.empty()
+  return res.empty()
 };
