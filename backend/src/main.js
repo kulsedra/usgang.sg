@@ -7,12 +7,12 @@ export default async ({ res, log, error }) => {
 
   const { scrapePalace } = useScraping();
 
-  const { createDocument } = useDatabaseAccess();
+  const { createDocuments } = useDatabaseAccess();
 
   const scrapePalaceResult = await scrapePalace();
 
   if (scrapePalaceResult !== null) {
-    await createDocument(scrapePalaceResult);
+    await createDocuments(scrapePalaceResult);
   } else {
     error('scraping palace failed');
   }

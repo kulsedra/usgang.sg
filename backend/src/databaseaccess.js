@@ -24,7 +24,13 @@ export const useDatabaseAccess = () => {
         }
     }
 
+    const createDocuments = async (events) => {
+        for (const event in events) {
+            await createDocument(event);
+        }
+    }
+
     return {
-        createDocument
+        createDocuments
     }
 }
