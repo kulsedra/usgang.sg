@@ -1,0 +1,40 @@
+app-navbar
+
+app-spinner(*ngIf="isLoading")
+.container.task-list(*ngIf="!isLoading")
+  h2 Tasks
+  a.btn.btn-primary(routerLink="/tasks/new") New Task
+  .table-responsive
+    table.table.table-striped
+      thead
+        tr
+          th.id(scope="col") #
+          th(scope="col") Name
+          th(scope="col") Done
+          th.actions(scope="col")
+      tbody
+        tr(*ngFor="let task of tasks")
+          th(scope="row") {{ task.id }}
+          td {{ task.name }}
+          td {{ task.done ? 'Yes' : 'No' }}
+          td.actions
+            button.btn.btn-info.btn-sm(
+              type="button"
+              title="View"
+              '(click)'="taskDetails(task)"
+              '[disabled]'="isSaving"
+            ) View
+            button.btn.btn-warning.btn-sm(
+              type="button"
+              title="Edit"
+              '(click)'="editTask(task)"
+              '[disabled]'="isSaving"
+            ) Edit
+            button.btn.btn-danger.btn-sm(
+              type="button"
+              title="Delete"
+              '(click)'="deleteTask(task)"
+              '[disabled]'="isSaving"
+            ) Delete
+        tr(*ngIf="tasks.length === 0")
+          td.text-center(colspan="4") No tasks
