@@ -1,14 +1,16 @@
 {
-  "name": "usgang.sg",
+  "name": "starter-template",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "src/main.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "format": "prettier --write ."
   },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "appwrite": "^15.0.0"
+    "node-appwrite": "^12.0.1"
+  },
+  "devDependencies": {
+    "prettier": "^3.2.5"
   }
 }
