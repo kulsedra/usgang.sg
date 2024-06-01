@@ -1,6 +1,6 @@
 import { Client, Databases, ID } from 'node-appwrite';
 
-export default async ({ log, error }) => {
+export default async ({ res, log, error }) => {
   const client = new Client()
     .setEndpoint('https://cloud.appwrite.io/v1')
     .setProject(process.env.APPWRITE_FUNCTION_PROJECT_ID)
@@ -25,4 +25,6 @@ export default async ({ log, error }) => {
   } catch (e) {
     error("Failed to create document: " + e.message)
   }
+
+  return context.res.empty()
 };
