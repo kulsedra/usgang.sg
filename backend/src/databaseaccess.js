@@ -8,25 +8,22 @@ export const useDatabaseAccess = () => {
 
     const databases = new Databases(client);
 
-    const createDocument = async ({ raw_html, event_description, event_date, event_link, club }) => {
+    const createDocuments = async (events) => {
+        const documents = events.map(event => databases.createDocument('usgang.sg', 'event', ID.unique(),
+            {
+                "raw_html": event.raw_html,
+                "event_description": event.event_description,
+                "event_date": event.event_date,
+                "event_link": event.event_link,
+                "club": event.club,
+            }
+
+        ))
+
         try {
-            await databases.createDocument('usgang.sg', 'event', ID.unique(),
-                {
-                    "raw_html": raw_html,
-                    "event_description": event_description,
-                    "event_date": event_date,
-                    "event_link": event_link,
-                    "club": club,
-                }
-            )
+            await Promise.all(documents);
         } catch (e) {
             console.error("Failed to create document: " + e.message)
-        }
-    }
-
-    const createDocuments = async (events) => {
-        for (const event in events) {
-            await createDocument(event);
         }
     }
 
