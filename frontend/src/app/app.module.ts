@@ -3,17 +3,18 @@ import { BrowserModule } from '@angular/platform-browser'
 import { RouterModule } from '@angular/router'
 
 import { AppComponent } from '@app/app.component'
-import { TasksModule } from '@app/tasks/module'
+import { TestComponent } from './test/test.component'
+import { HeuteModule } from './heute/heute.module';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, TestComponent],
   imports: [
     BrowserModule,
     RouterModule.forRoot([
-      { path: '', redirectTo: '/tasks', pathMatch: 'full' },
+      { path: '', redirectTo: '/heute', pathMatch: 'full' },
       { path: '**', redirectTo: '/404' },
     ]),
-    TasksModule,
+    HeuteModule,
   ],
   providers: [{ provide: Window, useValue: window }],
   bootstrap: [AppComponent],
