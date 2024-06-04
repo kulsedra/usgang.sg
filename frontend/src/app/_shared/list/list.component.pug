@@ -2,7 +2,7 @@ app-navbar
 
 
 
-a(*ngFor="let club of clubs" href="https://google.ch")
+a(*ngFor="let club of clubs" href="{{ club.club_link }}")
     div.event.centered
         h4 {{ club.name }}
         div keine versanstaltung
