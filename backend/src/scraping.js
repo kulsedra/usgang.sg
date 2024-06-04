@@ -18,7 +18,11 @@ export const useScraping = () => {
 
         console.log(`start scraping ${grabenHalle.name}`)
 
-        const html = await scrapeWebsite(grabenHalle.url);
+        const currentYear = moment().format('YYYY');
+
+        const currentMonth = moment().format('MM');
+
+        const html = await scrapeWebsite(`${grabenHalle.url}/${currentYear}/${currentMonth}`);
 
         if (html === null) {
             return null;
@@ -26,13 +30,31 @@ export const useScraping = () => {
 
         const dom = new JSDOM(html)
 
-        return {
-            "raw_html": html,
-            "event_description": "test",
-            "event_date": "01.06.2024",
-            "event_link": "https://www.digitec.ch",
-            "club": grabenHalle.documentID
-        }
+        const listing = dom.window.document.getElementById('listing');
+
+        const events = Array.from(listing.getElementsByClassName('post'));
+
+        return events.map(event => {
+            const posttitle = event.getElementsByClassName('posttitle')[0];
+
+            const headline = posttitle.textContent;
+
+            const link = posttitle.getElementsByTagName('a')[0].getAttribute("href");
+
+            const eventDay = event.getElementsByClassName('dayInfo')[0].textContent;
+
+            const eventDayIndex = eventDay.indexOf('.');
+
+            const date = `${eventDay.substring(eventDayIndex - 2, eventDayIndex)}.${currentMonth}.${currentYear}`
+
+            return {
+                "raw_html": html,
+                "event_description": headline,
+                "event_date": date,
+                "event_link": link,
+                "club": grabenHalle.documentID
+            }
+        })
     }
 
     const scrapePalace = async () => {
@@ -53,7 +75,7 @@ export const useScraping = () => {
         const events = Array.from(program.getElementsByTagName('a'));
 
         return events.map(event => {
-            const headline = event.getElementsByClassName('headline')[0].textContent;
+            const headline = event.getElementsByClassName('headline')[0].textContent || event.getElementsByClassName('act')[0].textContent;
 
             const link = palace.url + event.getAttribute("href");
 
@@ -80,3 +102,7 @@ export const useScraping = () => {
         scrapePalace
     }
 }
+
+const { scrapeGrabenhalle, scrapePalace } = useScraping();
+
+console.log(await scrapeGrabenhalle())
