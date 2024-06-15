@@ -1,9 +1,9 @@
-hr
+//- hr.noMargin
 
-span(*ngFor="let club of clubs")
+div.club(*ngFor="let club of clubs")
     a((click)="open(club)")
         div.event.centered
-            h4 {{ club.name }}
-            div(*ngIf="!club.event") keine versanstaltung
-            div(*ngIf="club.event") {{ club.event.event_description }}
+            div.clubhead {{ club.name }}
+            div.clubdesc(*ngIf="!club.event") keine versanstaltung
+            div.clubdesc(*ngIf="club.event") {{ club.event.event_description }}
 

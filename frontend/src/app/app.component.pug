@@ -1,16 +1,11 @@
-
-
 nav
-  ul
-    li.dropdown
-      a((click)="toggleDropdown()") {{ selection }}
-      ul.dropdown-menu([class.open]="dropdownOpen")
-        li
-          a((click)="toggleDropdown()" routerLink="/day/today" ) heute
-        li
-          a((click)="toggleDropdown()" routerLink="/day/tomorrow") morgen
-        li
-          a((click)="toggleDropdown()" routerLink="/day/dayafter") übermorgen
+  
+
+  div.dropdown
+    div(*ngIf="!dropdownOpen", (click)="toggleDropdown()") {{ selection }}
+    div(*ngIf="dropdownOpen")
+      div((click)="toggleDropdown()" routerLink="/day/today" ) heute
+      div((click)="toggleDropdown()" routerLink="/day/tomorrow") morgen
+      div((click)="toggleDropdown()" routerLink="/day/dayafter") übermorgen
 
 router-outlet
-

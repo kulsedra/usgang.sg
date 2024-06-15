@@ -21,6 +21,7 @@ export class AppComponent implements OnInit  {
   }
 
   toggleDropdown() {
+    console.log('toggle')
     this.dropdownOpen = !this.dropdownOpen;
   }
 }
