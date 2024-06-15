@@ -28,7 +28,6 @@ export class DbService {
   }
 
   public async getEvents(i: number): Promise<any> {
-    console.log("index: " + i);
     return this.databases.listDocuments(
       'usgang.sg', 
       'event', 
@@ -53,12 +52,11 @@ export class DbService {
       .setEndpoint(environment.APPWRITE_API_ENDPOINT)
       .setProject(environment.APPWRITE_PROJECT_ID);
 
-      console.log(this.days)
     
     this.days[1].setDate(this.days[0].getDate() + 1);
     this.days[2].setDate(this.days[0].getDate() + 2);
     this.formattedDays = [this.days[0].toUTCString(),this.days[1].toUTCString(),this.days[2].toUTCString()]
-    console.log(this.formattedDays)
+    
   }
 
   

@@ -3,8 +3,6 @@ import { BrowserModule } from '@angular/platform-browser'
 import { RouterModule, Routes } from '@angular/router'
 
 import { AppComponent } from '@app/app.component'
-import { TestComponent } from './test/test.component'
-import { HeuteModule } from './heute/heute.module';
 import { DayComponent } from './day/day.component'
 
 const routes: Routes = [
@@ -15,11 +13,10 @@ const routes: Routes = [
 
 
 @NgModule({
-  declarations: [AppComponent, DayComponent, TestComponent],
+  declarations: [AppComponent, DayComponent],
   imports: [
     BrowserModule,
     RouterModule.forRoot(routes),
-    HeuteModule,
   ],
   providers: [{ provide: Window, useValue: window }],
   bootstrap: [AppComponent],

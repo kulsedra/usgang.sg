@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DbService } from '@app/heute/db.service';
-import { selectService } from '@shared/shared.service';
 
 @Component({
   selector: 'app-day',
@@ -26,7 +25,7 @@ export class DayComponent implements OnInit {
   
   sharedVariable: string;
 
-  constructor(private route: ActivatedRoute, private db: DbService, private selectService: selectService) { }
+  constructor(private route: ActivatedRoute, private db: DbService) { }
   
   ngOnInit(): void {
     
@@ -37,9 +36,6 @@ export class DayComponent implements OnInit {
       this.selection = this.dayMapping[this.day] !== undefined ? this.dayMapping[this.day] : this.selection;
       this.db.setSharedVariable(this.dayMappingString[this.day])
 
-      console.log(this.selection)
-      console.log(this.day);
-      
       this.fetchClubs();
     });
 
@@ -70,7 +66,6 @@ export class DayComponent implements OnInit {
     try {
       const response = await this.db.getClubs();
       this.clubs = response.documents; 
-      console.log(this.clubs)
       this.fetchEvents();
     } catch (error) {
       console.error('Error fetching events:', error);
