@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Client, Account, Storage, Query, Databases } from 'appwrite';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +16,27 @@ export class DbService {
 
   private databases = new Databases(this.client);
 
-  private clubs: string;
+  private days = [new Date(new Date().setUTCHours(0,0,0,0)), new Date(new Date().setUTCHours(0,0,0,0)), new Date(new Date().setUTCHours(0,0,0,0))]
+  private formattedDays = ["", "", ""];
 
+
+  private selectionSubject = new BehaviorSubject<string>('heute');
+  selection$ = this.selectionSubject.asObservable();
+
+  setSharedVariable(value: string) {
+    this.selectionSubject.next(value);
+  }
+
+  public async getEvents(i: number): Promise<any> {
+    console.log("index: " + i);
+    return this.databases.listDocuments(
+      'usgang.sg', 
+      'event', 
+      [
+        Query.equal('event_date', this.formattedDays[i])
+      ]
+    );
+  }
   
   public async getClubs(): Promise<any> {
     return this.databases.listDocuments(
@@ -32,6 +52,13 @@ export class DbService {
     this.client
       .setEndpoint(environment.APPWRITE_API_ENDPOINT)
       .setProject(environment.APPWRITE_PROJECT_ID);
+
+      console.log(this.days)
+    
+    this.days[1].setDate(this.days[0].getDate() + 1);
+    this.days[2].setDate(this.days[0].getDate() + 2);
+    this.formattedDays = [this.days[0].toUTCString(),this.days[1].toUTCString(),this.days[2].toUTCString()]
+    console.log(this.formattedDays)
   }
 
   

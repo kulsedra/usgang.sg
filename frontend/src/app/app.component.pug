@@ -1,1 +1,16 @@
+
+
+nav
+  ul
+    li.dropdown
+      a((click)="toggleDropdown()") {{ selection }}
+      ul.dropdown-menu([class.open]="dropdownOpen")
+        li
+          a((click)="toggleDropdown()" routerLink="/day/today" ) heute
+        li
+          a((click)="toggleDropdown()" routerLink="/day/tomorrow") morgen
+        li
+          a((click)="toggleDropdown()" routerLink="/day/dayafter") übermorgen
+
 router-outlet
+

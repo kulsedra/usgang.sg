@@ -1,19 +1,24 @@
 import { NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
-import { RouterModule } from '@angular/router'
+import { RouterModule, Routes } from '@angular/router'
 
 import { AppComponent } from '@app/app.component'
 import { TestComponent } from './test/test.component'
 import { HeuteModule } from './heute/heute.module';
+import { DayComponent } from './day/day.component'
+
+const routes: Routes = [
+  { path: 'day/:day', component: DayComponent },
+  { path: '', redirectTo: '/day/today', pathMatch: 'full' },
+  { path: '**', redirectTo: '/day/today' }
+];
+
 
 @NgModule({
-  declarations: [AppComponent, TestComponent],
+  declarations: [AppComponent, DayComponent, TestComponent],
   imports: [
     BrowserModule,
-    RouterModule.forRoot([
-      { path: '', redirectTo: '/heute', pathMatch: 'full' },
-      { path: '**', redirectTo: '/404' },
-    ]),
+    RouterModule.forRoot(routes),
     HeuteModule,
   ],
   providers: [{ provide: Window, useValue: window }],
