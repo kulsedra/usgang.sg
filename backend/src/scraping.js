@@ -186,29 +186,50 @@ export const useScraping = () => {
 
         const dom = new JSDOM(html)
 
-        const program = dom.window.document.getElementById('program');
+        const portfolio = dom.window.document.getElementById('portfolio');
 
-        const events = Array.from(program.getElementsByTagName('a'));
+        const events = Array.from(portfolio.getElementsByClassName('about-paragraph'));
 
         return events.map(event => {
+            const eventText = event.textContent;
+
             const headlines = Array.from(event.getElementsByTagName('strong'));
 
-            return headlines.map(headline => {
-                console.log(headline.textContent)
+            return headlines
+                .reduce((previousValue, currentValue) => previousValue.replace(currentValue.textContent, "*"), eventText)
+                .split('*')
+                .filter(eventDescription => eventDescription)
+                .map((eventDescription, index) => {
+                    const eventDate = headlines[index];
 
-                console.log('+')
+                    if (!eventDate) {
+                        return null;
+                    }
 
-                console.log(event.textContent)
+                    const normalizedEventDate = eventDate.textContent.split('-').filter(date => date);
 
-                return {
-                    "raw_html": html,
-                    "event_description": '',
-                    "event_date": '',
-                    "event_link": kult.url,
-                    "club": kult.documentID
-                }
-            });
-        })
+                    if (normalizedEventDate.length < 2) {
+                        return null;
+                    }
+
+                    const date = normalizedEventDate[1].trim();
+
+                    // S'kult bringts nödmol ane zum es datum richtig schriebe, drum müend mir da prüefe...
+
+                    if (date.split('.').length !== 3) {
+                        return null;
+                    }
+
+                    return {
+                        "raw_html": html,
+                        "event_description": eventDescription,
+                        "event_date": date,
+                        "event_link": kult.url,
+                        "club": kult.documentID
+                    }
+                })
+                .filter(mappedEvent => mappedEvent)
+        }).flatMap(event => event);
     }
 
     const scrapeGarage = async () => {
