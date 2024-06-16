@@ -1,5 +1,6 @@
 export const GRABENHALLE = "GRABENHALLE";
 export const PALACE = "PALACE";
+export const KUGL = "KUGL";
 
 export const clubs = {
     [GRABENHALLE]: {
@@ -11,5 +12,10 @@ export const clubs = {
         name: "Palace",
         documentID: "palace",
         url: "https://www.palace.sg"
+    },
+    [KUGL]: {
+        name: "Kugl",
+        documentID: "kugl",
+        url: "https://www.kugl.ch"
     }
 }
