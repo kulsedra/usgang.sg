@@ -137,9 +137,9 @@ export const useScraping = () => {
         const dom = new JSDOM(html);
 
         const program = dom.window.document.getElementsByClassName("col-5 col-lg-4");
-        
+
         const events = Array.from(program[0].getElementsByClassName('event-item'));
-        
+
         let yearFlag = false;
         const currentYear = moment().format('YYYY');
 
@@ -149,17 +149,17 @@ export const useScraping = () => {
             const link = event.getElementsByTagName('a')[0].getAttribute("href");
 
             const datetext = event.getElementsByClassName('event-date')[0].textContent;
-        
-            const mm = datetext.substring(3,5);
-            const dd = datetext.substring(0,2);
 
-            if(mm === '12') yearFlag = true;
-            if(mm === '01' && yearFlag) {
+            const mm = datetext.substring(3, 5);
+            const dd = datetext.substring(0, 2);
+
+            if (mm === '12') yearFlag = true;
+            if (mm === '01' && yearFlag) {
                 yearFlag = false;
                 currentYear += 1;
             }
 
-            const date = moment().year(currentYear).month(mm-1).date(dd).format('DD.MM.YYYY');
+            const date = moment().year(currentYear).month(mm - 1).date(dd).format('DD.MM.YYYY');
 
             return {
                 "raw_html": html,
@@ -186,30 +186,28 @@ export const useScraping = () => {
 
         const dom = new JSDOM(html)
 
-        const program = dom.window.document.getElementById('program');
+        const portfolio = dom.window.document.getElementById('portfolio');
 
-        const events = Array.from(program.getElementsByTagName('a'));
+        const events = Array.from(portfolio.getElementsByClassName('about-paragraph'));
 
         return events.map(event => {
-            const headline = event.getElementsByClassName('headline')[0].textContent || event.getElementsByClassName('act')[0].textContent;
+            const headlines = Array.from(event.getElementsByTagName('strong'));
 
-            const link = palace.url + event.getAttribute("href");
+            return headlines.map(headline => {
+                console.log(headline.textContent)
 
-            const onClickAttribute = event.getAttribute('onclick');
+                console.log('+')
 
-            const dateStartIndex = onClickAttribute.indexOf('"Event/') + 7;
+                console.log(event.textContent)
 
-            const dateEndIndex = dateStartIndex + 10;
-
-            const date = moment(onClickAttribute.substring(dateStartIndex, dateEndIndex)).format('DD.MM.YYYY');
-
-            return {
-                "raw_html": html,
-                "event_description": headline,
-                "event_date": date,
-                "event_link": link,
-                "club": kult.documentID
-            }
+                return {
+                    "raw_html": html,
+                    "event_description": '',
+                    "event_date": '',
+                    "event_link": kult.url,
+                    "club": kult.documentID
+                }
+            });
         })
     }
 
@@ -228,7 +226,7 @@ export const useScraping = () => {
 
         console.log(dom)
         const program = dom.window.document.getElementById("nu-elist");
-        
+
         console.log("program")
         console.log(program)
         const events = Array.from(program.getElementsByClassName('nu-e-content-pane'));
@@ -263,3 +261,7 @@ export const useScraping = () => {
         scrapeGarage
     }
 }
+
+const { scrapeKult } = useScraping();
+
+await scrapeKult()
