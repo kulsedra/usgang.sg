@@ -4,3 +4,26 @@
 
 body
     background-color: #282d32
+
+
+.gg-chevron-down 
+    box-sizing: border-box
+    position: relative
+    transform: scale(var(--ggs,1))
+    width: 22px
+    height: 22px
+    border: 2px solid transparent
+    border-radius: 100px
+
+.gg-chevron-down::after
+    content: ""
+    display: block
+    box-sizing: border-box
+    position: absolute
+    width: 16px
+    height: 16px
+    border-bottom: 2px solid
+    border-right: 2px solid
+    transform: rotate(45deg)
+    left: 8px
+    top: 8px

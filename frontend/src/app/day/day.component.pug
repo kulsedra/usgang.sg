@@ -4,6 +4,6 @@ div.club(*ngFor="let club of clubs")
     a((click)="open(club)")
         div.event.centered
             div.clubhead {{ club.name }}
-            div.clubdesc(*ngIf="!club.event") keine versanstaltung
+            div.clubdesc(*ngIf="!club.event") keine veranstaltung
             div.clubdesc(*ngIf="club.event") {{ club.event.event_description }}
 
