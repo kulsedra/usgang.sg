@@ -258,10 +258,11 @@ export const useScraping = () => {
         scrapeGrabenhalleForNextMonth,
         scrapePalace,
         scrapeKugl,
-        scrapeGarage
+        scrapeGarage,
+        scrapeKult,
     }
 }
 
-const { scrapeKult } = useScraping();
+// const { scrapeKult } = useScraping();
 
-await scrapeKult()
+// await scrapeKult()
