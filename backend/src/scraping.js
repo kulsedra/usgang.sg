@@ -18,7 +18,7 @@ export const useScraping = () => {
 
         const currentMonth = moment().format('MM');
 
-        await scrapeGrabenhalle(currentMonth, currentYear);
+        return await scrapeGrabenhalle(currentMonth, currentYear);
     }
 
     const scrapeGrabenhalleForNextMonth = async () => {
@@ -27,11 +27,11 @@ export const useScraping = () => {
         if (nextMonth === '01') {
             const nextYear = moment().add(1, 'year').format('YYYY');
 
-            await scrapeGrabenhalle(nextMonth, nextYear);
+            return await scrapeGrabenhalle(nextMonth, nextYear);
         } else {
             const currentYear = moment().format('YYYY');
 
-            await scrapeGrabenhalle(nextMonth, currentYear);
+            return await scrapeGrabenhalle(nextMonth, currentYear);
         }
     }
 
