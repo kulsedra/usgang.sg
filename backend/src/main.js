@@ -41,5 +41,13 @@ export default async ({ res, log, error }) => {
     error('scraping kugl failed');
   }
 
+  const scrapeGarageResult = await scrapeGarage();
+
+  if (scrapeGarageResult) {
+    await createDocuments(scrapeGarageResult);
+  } else {
+    error('scraping garage failed');
+  }
+
   return res.empty();
 }

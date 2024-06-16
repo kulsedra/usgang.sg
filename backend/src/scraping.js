@@ -1,4 +1,4 @@
-import { GRABENHALLE, PALACE, KUGL, KULT, clubs } from './clubs.js';
+import { GRABENHALLE, PALACE, KUGL, KULT, GARAGE, clubs } from './clubs.js';
 import { JSDOM } from 'jsdom';
 import moment from 'moment';
 
@@ -213,10 +213,53 @@ export const useScraping = () => {
         })
     }
 
+    const scrapeGarage = async () => {
+        const garage = clubs[GARAGE];
+
+        console.log(`start scraping ${garage.name}`)
+
+        const html = await scrapeWebsite(garage.url);
+
+        if (html === null) {
+            return null;
+        }
+
+        const dom = new JSDOM(html);
+
+        console.log(dom)
+        const program = dom.window.document.getElementById("nu-elist");
+        
+        console.log("program")
+        console.log(program)
+        const events = Array.from(program.getElementsByClassName('nu-e-content-pane'));
+
+        console.log(events)
+
+        return events.map(event => {
+            const headline = event.getElementsByClassName('nu-e-title sans')[0].textContent;
+
+            const link = "https://garage-sg.ch/nu/events/event_list/";
+
+            const datetext = event.getElementsByTagName('h4')[0].textContent;
+
+            const date = moment(datetext).format('DD.MM.YYYY');
+
+            return {
+                "raw_html": html,
+                "event_description": headline,
+                "event_date": date,
+                "event_link": link,
+                "club": garage.documentID
+            }
+        })
+
+    }
+
     return {
         scrapeGrabenhalleForCurrentMonth,
         scrapeGrabenhalleForNextMonth,
         scrapePalace,
-        scrapeKugl
+        scrapeKugl,
+        scrapeGarage
     }
 }
