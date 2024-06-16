@@ -1,4 +1,4 @@
-import { GRABENHALLE, PALACE, clubs } from './clubs.js';
+import { GRABENHALLE, KULT, PALACE, clubs } from './clubs.js';
 import { JSDOM } from 'jsdom';
 import moment from 'moment';
 
@@ -170,6 +170,47 @@ export const useScraping = () => {
             }
         })
 
+    }
+
+
+    const scrapeKult = async () => {
+        const kult = clubs[KULT];
+
+        console.log(`start scraping ${kult.name}`)
+
+        const html = await scrapeWebsite(kult.url);
+
+        if (html === null) {
+            return null;
+        }
+
+        const dom = new JSDOM(html)
+
+        const program = dom.window.document.getElementById('program');
+
+        const events = Array.from(program.getElementsByTagName('a'));
+
+        return events.map(event => {
+            const headline = event.getElementsByClassName('headline')[0].textContent || event.getElementsByClassName('act')[0].textContent;
+
+            const link = palace.url + event.getAttribute("href");
+
+            const onClickAttribute = event.getAttribute('onclick');
+
+            const dateStartIndex = onClickAttribute.indexOf('"Event/') + 7;
+
+            const dateEndIndex = dateStartIndex + 10;
+
+            const date = moment(onClickAttribute.substring(dateStartIndex, dateEndIndex)).format('DD.MM.YYYY');
+
+            return {
+                "raw_html": html,
+                "event_description": headline,
+                "event_date": date,
+                "event_link": link,
+                "club": kult.documentID
+            }
+        })
     }
 
     return {

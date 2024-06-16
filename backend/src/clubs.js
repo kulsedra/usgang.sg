@@ -1,6 +1,7 @@
 export const GRABENHALLE = "GRABENHALLE";
 export const PALACE = "PALACE";
 export const KUGL = "KUGL";
+export const KULT = "KULT";
 
 export const clubs = {
     [GRABENHALLE]: {
@@ -17,5 +18,10 @@ export const clubs = {
         name: "Kugl",
         documentID: "kugl",
         url: "https://www.kugl.ch"
+    },
+    [KULT]: {
+        name: "Kult",
+        documentID: "kult",
+        url: "https://www.kult.sg/#programm"
     }
 }
