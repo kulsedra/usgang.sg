@@ -186,9 +186,9 @@ export const useScraping = () => {
 
         const dom = new JSDOM(html)
 
-        const portfolio = dom.window.document.getElementById('portfolio');
+        const program = dom.window.document.getElementById('program');
 
-        const events = Array.from(portfolio.getElementsByClassName('about-paragraph'));
+        const events = Array.from(program.getElementsByTagName('a'));
 
         return events.map(event => {
             const headlines = Array.from(event.getElementsByTagName('strong'));
@@ -224,19 +224,12 @@ export const useScraping = () => {
 
         const dom = new JSDOM(html);
 
-        console.log(dom)
         const program = dom.window.document.getElementById("nu-elist");
 
-        console.log("program")
-        console.log(program)
         const events = Array.from(program.getElementsByClassName('nu-e-content-pane'));
 
-        console.log(events)
-
         return events.map(event => {
-            const headline = event.getElementsByClassName('nu-e-title sans')[0].textContent;
-
-            const link = "https://garage-sg.ch/nu/events/event_list/";
+            const headline = event.getElementsByClassName('nu-e-title sans')[0].textContent.trim();
 
             const datetext = event.getElementsByTagName('h4')[0].textContent;
 
@@ -246,7 +239,7 @@ export const useScraping = () => {
                 "raw_html": html,
                 "event_description": headline,
                 "event_date": date,
-                "event_link": link,
+                "event_link": garage.url,
                 "club": garage.documentID
             }
         })
@@ -262,7 +255,3 @@ export const useScraping = () => {
         scrapeKult,
     }
 }
-
-// const { scrapeKult } = useScraping();
-
-// await scrapeKult()
