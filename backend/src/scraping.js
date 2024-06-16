@@ -123,9 +123,59 @@ export const useScraping = () => {
         })
     }
 
+    const scrapeKugl = async () => {
+        const kugl = clubs[KUGL];
+
+        console.log(`start scraping ${kugl.name}`)
+
+        const html = await scrapeWebsite(kugl.url);
+
+        if (html === null) {
+            return null;
+        }
+
+        const dom = new JSDOM(html);
+
+        const program = dom.window.document.getElementsByClassName("col-5 col-lg-4");
+        
+        const events = Array.from(program[0].getElementsByClassName('event-item'));
+        
+        let yearFlag = false;
+        const currentYear = moment().format('YYYY');
+
+        return events.map(event => {
+            const headline = event.getElementsByClassName('event-headline')[0].textContent;
+
+            const link = event.getElementsByTagName('a')[0].getAttribute("href");
+
+            const datetext = event.getElementsByClassName('event-date')[0].textContent;
+        
+            const mm = datetext.substring(3,5);
+            const dd = datetext.substring(0,2);
+
+            if(mm === '12') yearFlag = true;
+            if(mm === '01' && yearFlag) {
+                yearFlag = false;
+                currentYear += 1;
+            }
+
+            const date = moment().year(currentYear).month(mm-1).date(dd).format('DD.MM.YYYY');
+
+            return {
+                "raw_html": html,
+                "event_description": headline,
+                "event_date": date,
+                "event_link": link,
+                "club": kugl.documentID
+            }
+        })
+
+    }
+
     return {
         scrapeGrabenhalleForCurrentMonth,
         scrapeGrabenhalleForNextMonth,
-        scrapePalace
+        scrapePalace,
+        scrapeKugl
     }
 }
