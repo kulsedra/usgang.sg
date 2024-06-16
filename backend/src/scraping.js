@@ -56,6 +56,10 @@ export const useScraping = () => {
 
         const events = Array.from(listing.getElementsByClassName('post'));
 
+        if (!events) {
+            return null;
+        }
+
         return events.map(event => {
             const posttitle = event.getElementsByClassName('posttitle')[0];
 
