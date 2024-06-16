@@ -5,7 +5,7 @@ import { useDatabaseAccess } from "./databaseaccess.js";
 export default async ({ res, log, error }) => {
   log('start service');
 
-  const { scrapePalace, scrapeGrabenhalleForCurrentMonth, scrapeGrabenhalleForNextMonth } = useScraping();
+  const { scrapePalace, scrapeGrabenhalleForCurrentMonth, scrapeGrabenhalleForNextMonth, scrapeKugl } = useScraping();
 
   const { createDocuments } = useDatabaseAccess();
 
@@ -31,6 +31,14 @@ export default async ({ res, log, error }) => {
     await createDocuments(scrapePalaceResult);
   } else {
     error('scraping palace failed');
+  }
+
+  const scrapeKuglResult = await scrapeKugl();
+
+  if (scrapeKuglResult) {
+    await createDocuments(scrapeKuglResult);
+  } else {
+    error('scraping kugl failed');
   }
 
   return res.empty();
