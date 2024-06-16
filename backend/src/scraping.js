@@ -13,16 +13,34 @@ export const useScraping = () => {
         }
     }
 
-    const scrapeGrabenhalle = async () => {
-        const grabenHalle = clubs[GRABENHALLE];
-
-        console.log(`start scraping ${grabenHalle.name}`)
-
+    const scrapeGrabenhalleForCurrentMonth = async () => {
         const currentYear = moment().format('YYYY');
 
         const currentMonth = moment().format('MM');
 
-        const html = await scrapeWebsite(`${grabenHalle.url}/${currentYear}/${currentMonth}`);
+        await scrapeGrabenhalle(currentMonth, currentYear);
+    }
+
+    const scrapeGrabenhalleForNextMonth = async () => {
+        const nextMonth = moment().add(1, 'month').format('MM');
+
+        if (nextMonth === '01') {
+            const nextYear = moment().add(1, 'year').format('YYYY');
+
+            await scrapeGrabenhalle(nextMonth, nextYear);
+        } else {
+            const currentYear = moment().format('YYYY');
+
+            await scrapeGrabenhalle(nextMonth, currentYear);
+        }
+    }
+
+    const scrapeGrabenhalle = async (month, year) => {
+        const grabenHalle = clubs[GRABENHALLE];
+
+        console.log(`start scraping ${grabenHalle.name}`)
+
+        const html = await scrapeWebsite(`${grabenHalle.url}/${year}/${month}`);
 
         if (html === null) {
             return null;
@@ -98,11 +116,8 @@ export const useScraping = () => {
     }
 
     return {
-        scrapeGrabenhalle,
+        scrapeGrabenhalleForCurrentMonth,
+        scrapeGrabenhalleForNextMonth,
         scrapePalace
     }
 }
-
-const { scrapeGrabenhalle, scrapePalace } = useScraping();
-
-console.log(await scrapeGrabenhalle())
