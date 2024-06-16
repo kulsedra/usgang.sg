@@ -55,8 +55,8 @@ export class DbService {
     
     this.days[1].setDate(this.days[0].getDate() + 1);
     this.days[2].setDate(this.days[0].getDate() + 2);
-    this.formattedDays = [this.days[0].toUTCString(),this.days[1].toUTCString(),this.days[2].toUTCString()]
-    
+    this.formattedDays = this.days.map(day => day.toUTCString());
+
   }
 
   
