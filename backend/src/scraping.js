@@ -1,4 +1,4 @@
-import { GRABENHALLE, KULT, PALACE, clubs } from './clubs.js';
+import { GRABENHALLE, PALACE, KUGL, KULT, clubs } from './clubs.js';
 import { JSDOM } from 'jsdom';
 import moment from 'moment';
 
