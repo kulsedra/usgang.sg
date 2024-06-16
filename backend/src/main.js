@@ -11,7 +11,7 @@ export default async ({ res, log, error }) => {
 
   const scrapeGrabenhalleForCurrentMonthResult = await scrapeGrabenhalleForCurrentMonth();
 
-  if (scrapeGrabenhalleForCurrentMonthResult !== null) {
+  if (scrapeGrabenhalleForCurrentMonthResult) {
     await createDocuments(scrapeGrabenhalleForCurrentMonthResult);
   } else {
     error('scraping grabenhalle for current month failed');
@@ -19,7 +19,7 @@ export default async ({ res, log, error }) => {
 
   const scrapeGrabenhalleForNextMonthResult = await scrapeGrabenhalleForNextMonth();
 
-  if (scrapeGrabenhalleForNextMonthResult !== null) {
+  if (scrapeGrabenhalleForNextMonthResult) {
     await createDocuments(scrapeGrabenhalleForNextMonthResult);
   } else {
     error('scraping grabenhalle for next month failed');
@@ -27,7 +27,7 @@ export default async ({ res, log, error }) => {
 
   const scrapePalaceResult = await scrapePalace();
 
-  if (scrapePalaceResult !== null) {
+  if (scrapePalaceResult) {
     await createDocuments(scrapePalaceResult);
   } else {
     error('scraping palace failed');
