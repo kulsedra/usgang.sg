@@ -5,7 +5,7 @@ import { useDatabaseAccess } from "./databaseaccess.js";
 export default async ({ res, log, error }) => {
   log('start service');
 
-  const { scrapePalace, scrapeGrabenhalleForCurrentMonth, scrapeGrabenhalleForNextMonth, scrapeKugl } = useScraping();
+  const { scrapePalace, scrapeGrabenhalleForCurrentMonth, scrapeGrabenhalleForNextMonth, scrapeKugl, scrapeGarage } = useScraping();
 
   const { createDocuments } = useDatabaseAccess();
 
