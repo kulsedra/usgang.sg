@@ -50,6 +50,10 @@ export const useScraping = () => {
 
         const listing = dom.window.document.getElementById('listing');
 
+        if (!listing) {
+            return null;
+        }
+
         const events = Array.from(listing.getElementsByClassName('post'));
 
         return events.map(event => {
@@ -63,7 +67,7 @@ export const useScraping = () => {
 
             const eventDayIndex = eventDay.indexOf('.');
 
-            const date = `${eventDay.substring(eventDayIndex - 2, eventDayIndex)}.${currentMonth}.${currentYear}`
+            const date = `${eventDay.substring(eventDayIndex - 2, eventDayIndex)}.${month}.${year}`
 
             return {
                 "raw_html": html,
