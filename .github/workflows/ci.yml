@@ -54,7 +54,7 @@ jobs:
           username: ${{ secrets.SFTP_USERNAME }}
           password: ${{ secrets.SFTP_PASSWORD }}
           port: ${{ secrets.SFTP_PORT }}
-          script: echo "Remote connection successful!"
+          script: whoami
           debug: true
 
       - name: Upload files via SFTP
