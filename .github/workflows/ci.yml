@@ -55,9 +55,7 @@ jobs:
           password: ${{ secrets.SFTP_PASSWORD }}
           port: ${{ secrets.SFTP_PORT }}
           script: |
-            mv /public_html/.htaccess /backup/ || { echo "Fehler beim Verschieben der .htaccess"; exit 1; }
-            rm -rf /public_html/* || { echo "Fehler beim Löschen des Inhalts von /public_html/"; exit 1; }
-            mv /backup/.htaccess /public_html/ || { echo "Fehler beim Zurückverschieben der .htaccess"; exit 1; }
+            rm -rf /public_html/*
 
 
       - name: Upload files via SFTP
