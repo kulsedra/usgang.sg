@@ -46,16 +46,6 @@ jobs:
         with:
           name: build
           path: ./build
-        
-      - name: Clean remote directory
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.SFTP_HOST }}
-          username: ${{ secrets.SFTP_USERNAME }}
-          password: ${{ secrets.SFTP_PASSWORD }}
-          port: ${{ secrets.SFTP_PORT }}
-          script: whoami
-          debug: true
 
       - name: Upload files via SFTP
         uses: appleboy/scp-action@v0.1.7
