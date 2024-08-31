@@ -55,7 +55,9 @@ jobs:
           password: ${{ secrets.SFTP_PASSWORD }}
           port: ${{ secrets.SFTP_PORT }}
           script: |
-            mv /public_html/.htaccess / && rm -rf /public_html/* && mv /.htaccess /public_html
+            mv /public_html/.htaccess /backup/ || exit 1
+            rm -rf /public_html/* || exit 1
+            mv /backup/.htaccess /public_html/ || exit 1
 
       - name: Upload files via SFTP
         uses: appleboy/scp-action@v0.1.4
