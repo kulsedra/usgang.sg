@@ -46,9 +46,6 @@ jobs:
         with:
           name: build
           path: ./build
-
-      - name: Enable SSH Debugging
-        run: export ACTIONS_RUNNER_DEBUG=true
         
       - name: Clean remote directory
         uses: appleboy/ssh-action@v0.1.5
@@ -57,9 +54,8 @@ jobs:
           username: ${{ secrets.SFTP_USERNAME }}
           password: ${{ secrets.SFTP_PASSWORD }}
           port: ${{ secrets.SFTP_PORT }}
-          script: rm -rf /public_html/*
+          script: echo "Remote connection successful!"
           debug: true
-
 
       - name: Upload files via SFTP
         uses: appleboy/scp-action@v0.1.4
