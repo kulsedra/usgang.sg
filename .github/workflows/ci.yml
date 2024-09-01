@@ -54,5 +54,5 @@ jobs:
           username: ${{ secrets.SFTP_USERNAME }}
           password: ${{ secrets.SFTP_PASSWORD }}
           port: ${{ secrets.SFTP_PORT }}
-          localDir: 'dist/*'
+          localDir: './build/*'
           remoteDir: '/public_html'
