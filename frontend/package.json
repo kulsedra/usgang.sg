@@ -11,7 +11,7 @@
     "ng": "ng",
     "generate": "ng generate",
     "build": "ng build --configuration development",
-    "build:prod": "ng build",
+    "build:prod": "ng build && cp ./dist/assets/.htaccess ./dist",
     "build:docs": "ng build  --base-href /angular-starter/ && mv dist docs",
     "start": "ng serve",
     "lint": "ng lint --fix",
