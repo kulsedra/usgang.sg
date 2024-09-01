@@ -47,12 +47,12 @@ jobs:
           name: build
           path: ./build
 
-      - name: Sync files
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      - name: Upload Files  
+        uses: wearesection/sftp-action@v1.0.0
         with:
-          server: ${{ secrets.SFTP_HOST }}
+          host: ${{ secrets.SFTP_HOST }}
           username: ${{ secrets.SFTP_USERNAME }}
           password: ${{ secrets.SFTP_PASSWORD }}
-          protocol: ftps
           port: ${{ secrets.SFTP_PORT }}
-          dry-run: true
+          localPath: './build/*'
+          remotePath: '/public_html'
