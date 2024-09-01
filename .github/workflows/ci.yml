@@ -29,6 +29,10 @@ jobs:
         run: npm run build:prod
         working-directory: ./frontend
 
+      - name: List files
+        run: npm run build:prod
+        working-directory: ./frontend
+
       - name: Upload Files
         uses: wangyucode/sftp-upload-action@v2.0.2
         with:
@@ -36,6 +40,6 @@ jobs:
           username: ${{ secrets.SFTP_USERNAME }}
           password: ${{ secrets.SFTP_PASSWORD }}
           port: ${{ secrets.SFTP_PORT }}
-          localDir: './frontend/dist/*'
+          localDir: './frontend/dist'
           remoteDir: '/public_html'
       
