@@ -18,9 +18,6 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Change to frontend directory
-        run: cd frontend
-
       - name: Install dependencies
         run: npm install
         working-directory: ./frontend
@@ -42,4 +39,5 @@ jobs:
           port: ${{ secrets.SFTP_PORT }}
           localDir: './frontend/dist'
           remoteDir: '/public_html'
+          removeExtraFilesOnServer: true
       
