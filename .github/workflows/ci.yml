@@ -47,12 +47,12 @@ jobs:
           name: build
           path: ./build
 
-      - name: Upload Files  
-        uses: wearesection/sftp-action@v1.0.0
+      - name: Upload Files
+        uses: wangyucode/sftp-upload-action@v2.0.2
         with:
           host: ${{ secrets.SFTP_HOST }}
           username: ${{ secrets.SFTP_USERNAME }}
           password: ${{ secrets.SFTP_PASSWORD }}
           port: ${{ secrets.SFTP_PORT }}
-          localPath: './build/*'
-          remotePath: '/public_html'
+          localDir: 'dist/*'
+          remoteDir: '/public_html'
