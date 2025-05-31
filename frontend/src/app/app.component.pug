@@ -1,12 +1,14 @@
+div.l69-events
+  markdown([src]="'assets/l69/l69events.md'")
+
 nav
   
-
   div.dropdown
     div(*ngIf="!dropdownOpen", (click)="toggleDropdown()") {{ selection }} 
       i.gg-chevron-down 
       
     div(*ngIf="dropdownOpen")
-      div((click)="toggleDropdown()" routerLink="/day/today" ) heute
+      div((click)="toggleDropdown()" routerLink="/day/today") heute
       div((click)="toggleDropdown()" routerLink="/day/tomorrow") morgen
       div((click)="toggleDropdown()" routerLink="/day/dayafter") übermorgen
 

@@ -2,6 +2,9 @@ import { NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
 import { RouterModule, Routes } from '@angular/router'
 
+import { HttpClientModule } from '@angular/common/http';
+import { MarkdownModule } from 'ngx-markdown';
+
 import { AppComponent } from '@app/app.component'
 import { DayComponent } from './day/day.component'
 
@@ -17,6 +20,8 @@ const routes: Routes = [
   imports: [
     BrowserModule,
     RouterModule.forRoot(routes),
+    HttpClientModule,
+    MarkdownModule.forRoot(),
   ],
   providers: [{ provide: Window, useValue: window }],
   bootstrap: [AppComponent],
